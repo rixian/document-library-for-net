@@ -207,7 +207,7 @@ namespace VendorHub.DocumentLibrary
                                 }
                             }
 
-                            var fileResponse = new HttpFile((int)response.StatusCode, headers, responseStream, response);
+                            var fileResponse = new HttpFile(response.StatusCode, headers, responseStream, response);
                             return Result.Create(fileResponse);
                         }
 

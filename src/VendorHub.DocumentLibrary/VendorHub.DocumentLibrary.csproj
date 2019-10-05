@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <CodeAnalysisRuleSet>..\shipping.ruleset</CodeAnalysisRuleSet>
+    <Description>Client library for calling the VendorHub Document Library API.</Description>
   </PropertyGroup>
 
   <ItemGroup>

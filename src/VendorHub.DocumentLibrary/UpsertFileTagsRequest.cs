@@ -6,14 +6,25 @@ namespace VendorHub.DocumentLibrary
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// The request object for upserting file tags.
+    /// </summary>
     public class UpsertFileTagsRequest
     {
+        /// <summary>
+        /// Gets or sets the tags to upsert.
+        /// </summary>
         [JsonProperty("tags", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public IDictionary<string, string> Tags { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IDictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
+#pragma warning restore CA2227 // Collection properties should be read only
 
+        /// <summary>
+        /// Gets or sets any additional properties.
+        /// </summary>
         [JsonExtensionData]
+#pragma warning disable CA2227 // Collection properties should be read only
         public IDictionary<string, object> AdditionalProperties { get; set; } = new Dictionary<string, object>();
-
-
+#pragma warning restore CA2227 // Collection properties should be read only
     }
 }

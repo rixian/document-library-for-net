@@ -7,16 +7,15 @@ namespace VendorHub.DocumentLibrary
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Represents a library directory item.
+    /// </summary>
     public class LibraryDirectoryInfo : LibraryItemInfo
     {
-        [JsonProperty("parentDirectoryId", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public Guid ParentDirectoryId { get; set; }
-
+        /// <summary>
+        /// Gets or sets a value indicating whether the directory has children.
+        /// </summary>
         [JsonProperty("hasChildren", Required = Required.Always)]
         public bool HasChildren { get; set; }
-
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; } = new Dictionary<string, object>();
-
     }
 }

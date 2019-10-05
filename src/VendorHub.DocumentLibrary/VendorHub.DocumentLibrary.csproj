@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <CodeAnalysisRuleSet>..\shipping.ruleset</CodeAnalysisRuleSet>
     <Description>Client library for calling the VendorHub Document Library API.</Description>
+    <PackageIconUrl>https://storagerixiannet.blob.core.windows.net/public/nuget/icons/nuget-vendorhub-256.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <CodeAnalysisRuleSet>../shipping.ruleset</CodeAnalysisRuleSet>
+    <Description>Dependency Injection extensions for the VendorHub.DocumentLibrary library.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Rixian.Extensions.Tokens" Version="0.3.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VendorHub.DocumentLibrary\VendorHub.DocumentLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

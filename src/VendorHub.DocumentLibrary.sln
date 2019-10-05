@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 15.0.26124.0	VisualStudioVersion = 16.0.29322.22
-MinimumVisualStudioVersion = 15.0.26124.0	MinimumVisualStudioVersion = 15.0.26124.0
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 15.0.26124.0	MinimumVisualStudioVersion
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1CE9670B-D5FF-46A7-9D00-24E70E6ED48B}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
@@ -16,9 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorHub.DocumentLibrary", "VendorHub.DocumentLibrary\VendorHub.DocumentLibrary.csproj", "{6FA7B46F-5AE9-4B4B-8DA6-C9C5698CE9C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendorHub.DocumentLibrary", "VendorHub.DocumentLibrary\VendorHub.DocumentLibrary.csproj", "{6FA7B46F-5AE9-4B4B-8DA6-C9C5698CE9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorHub.DocumentLibrary.Tests", "VendorHub.DocumentLibrary.Tests\VendorHub.DocumentLibrary.Tests.csproj", "{7309E02D-1F33-4348-B0AD-842C463C5B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendorHub.DocumentLibrary.Tests", "VendorHub.DocumentLibrary.Tests\VendorHub.DocumentLibrary.Tests.csproj", "{7309E02D-1F33-4348-B0AD-842C463C5B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorHub.DocumentLibrary.DependencyInjection", "VendorHub.DocumentLibrary.DependencyInjection\VendorHub.DocumentLibrary.DependencyInjection.csproj", "{24E6A465-C493-46B6-A40D-1627504D8874}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC5F3D1C-A9A3-44B7-A3C0-82C1FF4C3336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC5F3D1C-A9A3-44B7-A3C0-82C1FF4C3336}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC5F3D1C-A9A3-44B7-A3C0-82C1FF4C3336}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC5F3D1C-A9A3-44B7-A3C0-82C1FF4C3336}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6FA7B46F-5AE9-4B4B-8DA6-C9C5698CE9C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FA7B46F-5AE9-4B4B-8DA6-C9C5698CE9C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA7B46F-5AE9-4B4B-8DA6-C9C5698CE9C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +36,10 @@ Global
 		{7309E02D-1F33-4348-B0AD-842C463C5B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7309E02D-1F33-4348-B0AD-842C463C5B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7309E02D-1F33-4348-B0AD-842C463C5B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E6A465-C493-46B6-A40D-1627504D8874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E6A465-C493-46B6-A40D-1627504D8874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E6A465-C493-46B6-A40D-1627504D8874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E6A465-C493-46B6-A40D-1627504D8874}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

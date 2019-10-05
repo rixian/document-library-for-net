@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj" />
+    <ProjectReference Include="..\VendorHub.DocumentLibrary\VendorHub.DocumentLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

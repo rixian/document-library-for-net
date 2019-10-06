@@ -87,7 +87,7 @@ namespace VendorHub.DocumentLibrary
         [JsonProperty("attributes", Required = Required.Always)]
         [Required]
 #pragma warning disable CA2227 // Collection properties should be read only
-        public ICollection<string> Attributes { get; set; } = new List<string>();
+        public string? Attributes { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>

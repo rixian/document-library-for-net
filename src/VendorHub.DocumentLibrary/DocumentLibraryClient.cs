@@ -170,6 +170,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> DownloadContentHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/download")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -186,6 +191,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> GetItemInfoHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/info")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -203,6 +213,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> ListFileTagsHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/list-tags")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -220,6 +235,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> UpsertFileTagsHttpResponseAsync(Guid libraryId, CloudPath path, UpsertFileTagsRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/upsert-tags")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -238,6 +258,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> ClearFileTagsHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/clear-tags")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -255,6 +280,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> RemoveFileTagHttpResponseAsync(Guid libraryId, CloudPath path, string key, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/remove-tag")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -273,6 +303,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> DeleteItemHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/delete")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -290,6 +325,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> ListChildrenHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/dir")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -307,6 +347,11 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> ExistsHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (path is null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/exists")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -324,6 +369,16 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> CopyHttpResponseAsync(Guid libraryId, CloudPath source, CloudPath target, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/copy")
                 .ReplaceToken("{libraryId}", libraryId)

@@ -191,38 +191,41 @@ namespace VendorHub.DocumentLibrary
 
             HttpResponseMessage response = await documentLibraryClient.DownloadContentHttpResponseAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            using (response)
+            switch (response.StatusCode)
             {
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.OK:
+                case HttpStatusCode.OK:
+                    {
+                        Stream responseStream = response.Content == null ? Stream.Null : await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                        var headers = response.Headers.ToDictionary(h => h.Key, h => h.Value);
+                        if (response.Content != null && response.Content.Headers != null)
                         {
-                            Stream responseStream = response.Content == null ? Stream.Null : await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                            var headers = response.Headers.ToDictionary(h => h.Key, h => h.Value);
-                            if (response.Content != null && response.Content.Headers != null)
+                            foreach (KeyValuePair<string, IEnumerable<string>> item_ in response.Content.Headers)
                             {
-                                foreach (KeyValuePair<string, IEnumerable<string>> item_ in response.Content.Headers)
-                                {
-                                    headers[item_.Key] = item_.Value;
-                                }
+                                headers[item_.Key] = item_.Value;
                             }
-
-                            var fileResponse = new HttpFile(response.StatusCode, headers, responseStream, response);
-                            return Result.Create(fileResponse);
                         }
 
-                    case HttpStatusCode.NoContent:
-                        return default;
-                    case HttpStatusCode.BadRequest:
-                    case HttpStatusCode.InternalServerError:
-                        {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
-                        }
+                        var fileResponse = new HttpFile(response.StatusCode, headers, responseStream, response);
+                        return Result.Create(fileResponse);
+                    }
 
-                    default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(DownloadContentResultAsync)}").ConfigureAwait(false);
-                }
+                case HttpStatusCode.NoContent:
+                    response.Dispose();
+                    return default;
+                case HttpStatusCode.BadRequest:
+                case HttpStatusCode.InternalServerError:
+                    {
+                        ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                        response.Dispose();
+                        return errorResponse.Error;
+                    }
+
+                default:
+                    {
+                        UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(DownloadContentResultAsync)}").ConfigureAwait(false);
+                        response.Dispose();
+                        return error;
+                    }
             }
         }
 

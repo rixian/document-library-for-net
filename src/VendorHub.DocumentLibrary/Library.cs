@@ -45,6 +45,12 @@ namespace VendorHub.DocumentLibrary
         public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether search is enabled for this library or not.
+        /// </summary>
+        [JsonProperty("isSearchEnabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsSearchEnabled { get; set; }
+
+        /// <summary>
         /// Gets or sets any additional properties.
         /// </summary>
         [JsonExtensionData]

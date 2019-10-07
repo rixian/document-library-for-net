@@ -23,6 +23,7 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the library root storage location.
         /// </summary>
+        [JsonConverter(typeof(CloudPathJsonConverter))]
         [JsonProperty("location", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
         public CloudPath? Location { get; set; }
 

@@ -12,14 +12,50 @@ namespace VendorHub.DocumentLibrary
     /// <summary>
     /// Represents a search result.
     /// </summary>
-    public class SearchResult
+    public class SearchResult<T>
     {
         /// <summary>
         /// Gets or sets the entity ID found from the search.
         /// </summary>
-        [JsonProperty("id", Required = Required.Always)]
+        [JsonProperty("document", Required = Required.Always)]
+        public T Document { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the library item.
+        /// </summary>
+        [JsonProperty("@search.score", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public double? SearchScore { get; set; }
+
+        /// <summary>
+        /// Gets or sets any additional properties.
+        /// </summary>
+        [JsonExtensionData]
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IDictionary<string, object> AdditionalProperties { get; set; } = new Dictionary<string, object>();
+#pragma warning restore CA2227 // Collection properties should be read only
+
+    }
+
+
+    /// <summary>
+    /// Represents a search result.
+    /// </summary>
+    public class LibrarySearchResult
+    {
+        /// <summary>
+        /// Gets or sets the entity ID found from the search.
+        /// </summary>
+        [JsonProperty("driveItemId", Required = Required.Always)]
         [Required(AllowEmptyStrings = true)]
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the library ID found from the search.
+        /// </summary>
+        [JsonProperty("libraryId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid LibraryId { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the search result.

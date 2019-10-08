@@ -101,14 +101,14 @@ namespace VendorHub.DocumentLibrary
         /// <param name="filter">Extra filters to aplly to the search.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The search results.</returns>
-        public static async Task<ICollection<SearchResult>> SearchLibraryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
+        public static async Task<ICollection<SearchResult<LibrarySearchResult>>> SearchLibraryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
         {
             if (documentLibraryClient is null)
             {
                 throw new ArgumentNullException(nameof(documentLibraryClient));
             }
 
-            Result<ICollection<SearchResult>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
+            Result<ICollection<SearchResult<LibrarySearchResult>>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
 
             if (result.IsResult)
             {

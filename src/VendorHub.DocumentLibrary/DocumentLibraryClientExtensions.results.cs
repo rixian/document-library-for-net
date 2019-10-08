@@ -143,7 +143,7 @@ namespace VendorHub.DocumentLibrary
         /// <param name="filter">Extra filters to aplly to the search.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Either the search results or an error.</returns>
-        public static async Task<Result<ICollection<SearchResult>>> SearchLibraryResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
+        public static async Task<Result<ICollection<SearchResult<LibrarySearchResult>>>> SearchLibraryResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
         {
             if (documentLibraryClient is null)
             {
@@ -157,7 +157,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<SearchResult>>().ConfigureAwait(false));
+                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
                     case HttpStatusCode.NoContent:
                         return default;
                     case HttpStatusCode.BadRequest:

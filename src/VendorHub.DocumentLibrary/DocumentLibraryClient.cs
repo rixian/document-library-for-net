@@ -4,7 +4,9 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
+    using System.IO;
     using System.Net.Http;
+    using System.Net.Mime;
     using System.Threading;
     using System.Threading.Tasks;
     using Polly;
@@ -101,6 +103,16 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the policy for the Move http request.
         /// </summary>
         protected IAsyncPolicy<HttpResponseMessage>? MovePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy for the CreateDirectory http request.
+        /// </summary>
+        protected IAsyncPolicy<HttpResponseMessage>? CreateDirectoryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy for the UploadFile http request.
+        /// </summary>
+        protected IAsyncPolicy<HttpResponseMessage>? UploadFilePolicy { get; set; }
 
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> CreateLibraryHttpResponseAsync(CreateLibraryRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default)
@@ -412,6 +424,41 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+        /// <inheritdoc/>
+        public async Task<HttpResponseMessage> CreateDirectoryHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            IHttpRequestMessageBuilder requestBuilder = UrlBuilder
+                .Create("libraries/{libraryId}/cmd/create")
+                .ReplaceToken("{libraryId}", libraryId)
+                .SetQueryParam("path", path)
+                .SetQueryParam("tenantId", tenantId)
+                .ToRequest()
+                .WithHttpMethod().Post()
+                .WithAcceptApplicationJson();
+
+            requestBuilder = await this.PreviewCreateDirectoryAsync(requestBuilder).ConfigureAwait(false);
+            HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.CreateDirectoryPolicy, cancellationToken).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <inheritdoc/>
+        public async Task<HttpResponseMessage> UploadFileHttpResponseAsync(Guid libraryId, CloudPath path, Stream fileData, string? contentType = null, bool overwrite = false, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            IHttpRequestMessageBuilder requestBuilder = UrlBuilder
+                .Create("libraries/{libraryId}/cmd/create")
+                .ReplaceToken("{libraryId}", libraryId)
+                .SetQueryParam("path", path)
+                .SetQueryParam("tenantId", tenantId)
+                .ToRequest()
+                .WithHttpMethod().Post()
+                .WithAcceptApplicationJson()
+                .WithMultipartFormContent().WithFile("data", fileData, path.GetFileName(), contentType ?? MediaTypeNames.Application.Octet).RequestBuilder;
+
+            requestBuilder = await this.PreviewUploadFileAsync(requestBuilder).ConfigureAwait(false);
+            HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.UploadFilePolicy, cancellationToken).ConfigureAwait(false);
+            return response;
+        }
+
         /// <summary>
         /// Optional method for configuring the HttpRequestMessage before sending the call to CreateLibrary.
         /// </summary>
@@ -558,6 +605,26 @@ namespace VendorHub.DocumentLibrary
         /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
         /// <returns>The updated IHttpRequestMessageBuilder.</returns>
         protected virtual Task<IHttpRequestMessageBuilder> PreviewMoveAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
+        {
+            return Task.FromResult(httpRequestMessageBuilder);
+        }
+
+        /// <summary>
+        /// Optional method for configuring the HttpRequestMessage before sending the call to CreateDirectory.
+        /// </summary>
+        /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
+        /// <returns>The updated IHttpRequestMessageBuilder.</returns>
+        protected virtual Task<IHttpRequestMessageBuilder> PreviewCreateDirectoryAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
+        {
+            return Task.FromResult(httpRequestMessageBuilder);
+        }
+
+        /// <summary>
+        /// Optional method for configuring the HttpRequestMessage before sending the call to UploadFile.
+        /// </summary>
+        /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
+        /// <returns>The updated IHttpRequestMessageBuilder.</returns>
+        protected virtual Task<IHttpRequestMessageBuilder> PreviewUploadFileAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
         {
             return Task.FromResult(httpRequestMessageBuilder);
         }

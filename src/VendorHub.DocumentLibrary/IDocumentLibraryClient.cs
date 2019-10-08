@@ -4,6 +4,7 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
+    using System.IO;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -43,6 +44,29 @@ namespace VendorHub.DocumentLibrary
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The raw HttpResponseMessage.</returns>
         Task<HttpResponseMessage> CreateLibraryHttpResponseAsync(CreateLibraryRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a directory.
+        /// </summary>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the directory.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The raw HttpResponseMessage.</returns>
+        Task<HttpResponseMessage> CreateDirectoryHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Uploads a file.
+        /// </summary>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="fileData">The file data to upload.</param>
+        /// <param name="contentType">Optional. The content type to assign this file.</param>
+        /// <param name="overwrite">A value that indicates whether to overwrite the file if it already exists.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The raw HttpResponseMessage.</returns>
+        Task<HttpResponseMessage> UploadFileHttpResponseAsync(Guid libraryId, CloudPath path, Stream fileData, string? contentType = null, bool overwrite = false, Guid? tenantId = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a file or directory and all children.

@@ -182,7 +182,7 @@ namespace VendorHub.DocumentLibrary
         /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Either the http file stream or an error.</returns>
-        public static async Task<Result<HttpFile>> DownloadContentResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        public static async Task<Result<HttpFileResponse>> DownloadContentResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
             if (documentLibraryClient is null)
             {
@@ -205,7 +205,7 @@ namespace VendorHub.DocumentLibrary
                             }
                         }
 
-                        var fileResponse = new HttpFile(response.StatusCode, headers, responseStream, response);
+                        var fileResponse = new HttpFileResponse(response.StatusCode, headers, responseStream, response);
                         return Result.Create(fileResponse);
                     }
 
@@ -608,6 +608,87 @@ namespace VendorHub.DocumentLibrary
                 {
                     case HttpStatusCode.OK:
                         return Result.Default;
+                    case HttpStatusCode.NoContent:
+                        return default;
+                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse.Error;
+                        }
+
+                    default:
+                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a directory.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the directory.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Either the directory or an error.</returns>
+        public static async Task<Result<LibraryDirectoryInfo>> CreateDirectoryResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            HttpResponseMessage response = await documentLibraryClient.CreateDirectoryHttpResponseAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            using (response)
+            {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return Result.Create(await response.DeserializeJsonContentAsync<LibraryDirectoryInfo>().ConfigureAwait(false));
+                    case HttpStatusCode.NoContent:
+                        return default;
+                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse.Error;
+                        }
+
+                    default:
+                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Uploads a file.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="fileData">The file data to upload.</param>
+        /// <param name="contentType">Optional. The content type to assign this file.</param>
+        /// <param name="overwrite">A value that indicates whether to overwrite the file if it already exists.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Either the file or an error.</returns>
+        public static async Task<Result<LibraryFileInfo>> UploadFileResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Stream fileData, string? contentType = null, bool overwrite = false, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            HttpResponseMessage response = await documentLibraryClient.UploadFileHttpResponseAsync(libraryId, path, fileData, contentType, overwrite, tenantId, cancellationToken).ConfigureAwait(false);
+
+            using (response)
+            {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return Result.Create(await response.DeserializeJsonContentAsync<LibraryFileInfo>().ConfigureAwait(false));
                     case HttpStatusCode.NoContent:
                         return default;
                     case HttpStatusCode.BadRequest:

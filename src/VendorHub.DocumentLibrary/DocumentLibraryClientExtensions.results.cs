@@ -703,5 +703,45 @@ namespace VendorHub.DocumentLibrary
                 }
             }
         }
+
+        /// <summary>
+        /// Imports files into a library.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="importRecords">The records to import.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Either the imported files or an error.</returns>
+        public static async Task<Result<ICollection<LibraryFileInfo>>> ImportFilesResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            HttpResponseMessage response = await documentLibraryClient.ImportFilesHttpResponseAsync(libraryId, importRecords, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            using (response)
+            {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<LibraryFileInfo>>().ConfigureAwait(false));
+                    case HttpStatusCode.NoContent:
+                        return default;
+                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse.Error;
+                        }
+
+                    default:
+                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ImportFilesResultAsync)}").ConfigureAwait(false);
+                }
+            }
+        }
     }
 }

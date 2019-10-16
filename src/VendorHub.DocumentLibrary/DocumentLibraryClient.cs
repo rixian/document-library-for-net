@@ -4,6 +4,7 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net.Http;
     using System.Net.Mime;
@@ -113,6 +114,11 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the policy for the UploadFile http request.
         /// </summary>
         protected IAsyncPolicy<HttpResponseMessage>? UploadFilePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy for the ImportFiles http request.
+        /// </summary>
+        protected IAsyncPolicy<HttpResponseMessage>? ImportFilesPolicy { get; set; }
 
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> CreateLibraryHttpResponseAsync(CreateLibraryRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default)
@@ -459,6 +465,27 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+        /// <inheritdoc/>
+        public async Task<HttpResponseMessage> ImportFilesHttpResponseAsync(Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            IHttpRequestMessageBuilder requestBuilder = UrlBuilder
+                .Create("libraries/{libraryId}/cmd/import")
+                .ReplaceToken("{libraryId}", libraryId)
+                .SetQueryParam("path", path)
+                .SetQueryParam("tenantId", tenantId)
+                .ToRequest()
+                .WithHttpMethod().Post()
+                .WithAcceptApplicationJson()
+                .WithContentJson(new
+                {
+                    files = importRecords,
+                });
+
+            requestBuilder = await this.PreviewImportFilesAsync(requestBuilder).ConfigureAwait(false);
+            HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.ImportFilesPolicy, cancellationToken).ConfigureAwait(false);
+            return response;
+        }
+
         /// <summary>
         /// Optional method for configuring the HttpRequestMessage before sending the call to CreateLibrary.
         /// </summary>
@@ -625,6 +652,16 @@ namespace VendorHub.DocumentLibrary
         /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
         /// <returns>The updated IHttpRequestMessageBuilder.</returns>
         protected virtual Task<IHttpRequestMessageBuilder> PreviewUploadFileAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
+        {
+            return Task.FromResult(httpRequestMessageBuilder);
+        }
+
+        /// <summary>
+        /// Optional method for configuring the HttpRequestMessage before sending the call to ImportFiles.
+        /// </summary>
+        /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
+        /// <returns>The updated IHttpRequestMessageBuilder.</returns>
+        protected virtual Task<IHttpRequestMessageBuilder> PreviewImportFilesAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
         {
             return Task.FromResult(httpRequestMessageBuilder);
         }

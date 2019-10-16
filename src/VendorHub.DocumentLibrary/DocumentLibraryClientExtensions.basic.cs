@@ -462,5 +462,32 @@ namespace VendorHub.DocumentLibrary
 
             throw ApiException.Create(result.Error);
         }
+
+        /// <summary>
+        /// Imports files into a library.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="importRecords">The records to import.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The uploaded file.</returns>
+        public static async Task<ICollection<LibraryFileInfo>> ImportFilesAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<ICollection<LibraryFileInfo>> result = await documentLibraryClient.ImportFilesResultAsync(libraryId, importRecords, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsResult)
+            {
+                return result.Value;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
     }
 }

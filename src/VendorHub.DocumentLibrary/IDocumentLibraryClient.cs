@@ -4,6 +4,7 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net.Http;
     using System.Threading;
@@ -188,5 +189,16 @@ namespace VendorHub.DocumentLibrary
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The raw HttpResponseMessage.</returns>
         Task<HttpResponseMessage> UpsertFileTagsHttpResponseAsync(Guid libraryId, CloudPath path, UpsertFileTagsRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Imports files into a library.
+        /// </summary>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="importRecords">The records to import.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The raw HttpResponseMessage.</returns>
+        Task<HttpResponseMessage> ImportFilesHttpResponseAsync(Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default);
     }
 }

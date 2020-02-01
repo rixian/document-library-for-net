@@ -3,35 +3,31 @@
 
 namespace VendorHub.DocumentLibrary
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
     using Rixian.Drive.Common;
 
     /// <summary>
-    /// The request object for creating a new library.
+    /// Represents a search result.
     /// </summary>
-    public class CreateLibraryRequest
+    /// <typeparam name="T">The document type of the search result.</typeparam>
+    public class SearchResult<T>
+        where T : class
     {
         /// <summary>
-        /// Gets or sets the library name.
+        /// Gets or sets the document found from the search.
         /// </summary>
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonProperty("document", Required = Required.Always)]
+        public T? Document { get; set; }
+
+        /// <summary>
+        /// Gets or sets the search score.
+        /// </summary>
+        [JsonProperty("@search.score", Required = Required.Always)]
         [Required(AllowEmptyStrings = true)]
-        public string? Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the library root storage location.
-        /// </summary>
-        [JsonConverter(typeof(CloudPathJsonConverter))]
-        [JsonProperty("location", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public CloudPath? Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the library has search enabled or not.
-        /// </summary>
-        [JsonProperty("enableSearch", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public bool EnableSearch { get; set; }
+        public double? SearchScore { get; set; }
 
         /// <summary>
         /// Gets or sets any additional properties.
@@ -40,5 +36,6 @@ namespace VendorHub.DocumentLibrary
 #pragma warning disable CA2227 // Collection properties should be read only
         public IDictionary<string, object> AdditionalProperties { get; set; } = new Dictionary<string, object>();
 #pragma warning restore CA2227 // Collection properties should be read only
+
     }
 }

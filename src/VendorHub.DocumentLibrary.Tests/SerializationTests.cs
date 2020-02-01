@@ -35,10 +35,7 @@ public class SerializationTests
             Id = Guid.NewGuid(),
             TenantId = Guid.NewGuid(),
             AlternateId = Guid.NewGuid().ToString(),
-            Attributes = new List<string>
-            {
-                "Hidden",
-            },
+            Attributes = "Hidden",
             ContentType = MediaTypeNames.Application.Octet,
             CreatedOn = DateTimeOffset.UtcNow,
             FullPath = "C:/foo.txt",

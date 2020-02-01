@@ -11,19 +11,19 @@ namespace VendorHub.DocumentLibrary
     /// <summary>
     /// Represents a file response from an http call.
     /// </summary>
-    public class HttpFile : IDisposable
+    public class HttpFileResponse : IDisposable
     {
         private IDisposable response;
         private bool disposedValue = false; // To detect redundant calls
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpFile"/> class.
+        /// Initializes a new instance of the <see cref="HttpFileResponse"/> class.
         /// </summary>
         /// <param name="statusCode">The status code of the response.</param>
         /// <param name="headers">The response headers.</param>
         /// <param name="stream">The response data stream.</param>
         /// <param name="response">Handle to the response object.</param>
-        public HttpFile(HttpStatusCode statusCode, IReadOnlyDictionary<string, IEnumerable<string>> headers, Stream stream, IDisposable response)
+        public HttpFileResponse(HttpStatusCode statusCode, IReadOnlyDictionary<string, IEnumerable<string>> headers, Stream stream, IDisposable response)
         {
             this.StatusCode = statusCode;
             this.Headers = headers;

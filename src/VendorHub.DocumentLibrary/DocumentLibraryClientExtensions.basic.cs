@@ -5,6 +5,7 @@ namespace VendorHub.DocumentLibrary
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using Rixian.Drive.Common;
@@ -100,14 +101,14 @@ namespace VendorHub.DocumentLibrary
         /// <param name="filter">Extra filters to aplly to the search.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The search results.</returns>
-        public static async Task<ICollection<SearchResult>> SearchLibraryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
+        public static async Task<ICollection<SearchResult<LibrarySearchResult>>> SearchLibraryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
         {
             if (documentLibraryClient is null)
             {
                 throw new ArgumentNullException(nameof(documentLibraryClient));
             }
 
-            Result<ICollection<SearchResult>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
+            Result<ICollection<SearchResult<LibrarySearchResult>>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
 
             if (result.IsResult)
             {
@@ -126,14 +127,14 @@ namespace VendorHub.DocumentLibrary
         /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The http file stream.</returns>
-        public static async Task<HttpFile> DownloadContentAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        public static async Task<HttpFileResponse> DownloadContentAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
             if (documentLibraryClient is null)
             {
                 throw new ArgumentNullException(nameof(documentLibraryClient));
             }
 
-            Result<HttpFile> result = await documentLibraryClient.DownloadContentResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
+            Result<HttpFileResponse> result = await documentLibraryClient.DownloadContentResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
             if (result.IsResult)
             {
@@ -402,6 +403,88 @@ namespace VendorHub.DocumentLibrary
             if (result.IsSuccess)
             {
                 return;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
+
+        /// <summary>
+        /// Creates a directory.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the directory.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The created directory.</returns>
+        public static async Task<LibraryDirectoryInfo> CreateDirectoryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<LibraryDirectoryInfo> result = await documentLibraryClient.CreateDirectoryResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsResult)
+            {
+                return result.Value;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
+
+        /// <summary>
+        /// Uploads a file.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="fileData">The file data to upload.</param>
+        /// <param name="contentType">Optional. The content type to assign this file.</param>
+        /// <param name="overwrite">A value that indicates whether to overwrite the file if it already exists.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The uploaded file.</returns>
+        public static async Task<LibraryFileInfo> UploadFileAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Stream fileData, string? contentType = null, bool overwrite = false, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<LibraryFileInfo> result = await documentLibraryClient.UploadFileResultAsync(libraryId, path, fileData, contentType, overwrite, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsResult)
+            {
+                return result.Value;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
+
+        /// <summary>
+        /// Imports files into a library.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="importRecords">The records to import.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The uploaded file.</returns>
+        public static async Task<ICollection<LibraryFileInfo>> ImportFilesAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<ICollection<LibraryFileInfo>> result = await documentLibraryClient.ImportFilesResultAsync(libraryId, importRecords, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsResult)
+            {
+                return result.Value;
             }
 
             throw ApiException.Create(result.Error);

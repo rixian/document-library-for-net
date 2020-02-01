@@ -12,14 +12,21 @@ namespace VendorHub.DocumentLibrary
     /// <summary>
     /// Represents a search result.
     /// </summary>
-    public class SearchResult
+    public class LibrarySearchResult
     {
         /// <summary>
-        /// Gets or sets the entity ID found from the search.
+        /// Gets or sets the drive item ID found from the search.
         /// </summary>
-        [JsonProperty("id", Required = Required.Always)]
+        [JsonProperty("driveItemId", Required = Required.Always)]
         [Required(AllowEmptyStrings = true)]
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the library ID found from the search.
+        /// </summary>
+        [JsonProperty("libraryId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid LibraryId { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the search result.

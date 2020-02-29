@@ -215,9 +215,23 @@ namespace VendorHub.DocumentLibrary
                 case HttpStatusCode.BadRequest:
                 case HttpStatusCode.InternalServerError:
                     {
-                        ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                        response.Dispose();
-                        return errorResponse.Error;
+                        try
+                        {
+                            if (response.IsContentProblem())
+                            {
+                                HttpProblem problem = await response.DeserializeJsonContentAsync<HttpProblem>().ConfigureAwait(false);
+                                return new HttpProblemError(problem);
+                            }
+                            else
+                            {
+                                ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                                return errorResponse.Error;
+                            }
+                        }
+                        finally
+                        {
+                            response.Dispose();
+                        }
                     }
 
                 default:

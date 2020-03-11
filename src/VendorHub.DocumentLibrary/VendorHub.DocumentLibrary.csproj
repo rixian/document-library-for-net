@@ -10,11 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="Polly" Version="7.2.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'ProjRef'">
     <PackageReference Include="Rixian.Drive.Common" Version="0.5.5" />
-    <PackageReference Include="Rixian.Extensions.Http.Client" Version="0.5.6" />
+    <PackageReference Include="Rixian.Extensions.Http.Client" Version="0.6.10" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'ProjRef'">

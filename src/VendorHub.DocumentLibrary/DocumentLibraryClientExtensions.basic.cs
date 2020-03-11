@@ -10,7 +10,6 @@ namespace VendorHub.DocumentLibrary
     using System.Threading.Tasks;
     using Rixian.Drive.Common;
     using Rixian.Extensions.Errors;
-    using Rixian.Extensions.Http.Client;
 
     /// <summary>
     /// Extensions for the VendorHub Document Library api client.

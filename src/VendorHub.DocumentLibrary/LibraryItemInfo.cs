@@ -5,7 +5,6 @@ namespace VendorHub.DocumentLibrary
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
     using Rixian.Drive.Common;

@@ -455,6 +455,7 @@ namespace VendorHub.DocumentLibrary
                 .ReplaceToken("{libraryId}", libraryId)
                 .SetQueryParam("path", path)
                 .SetQueryParam("tenantId", tenantId)
+                .SetQueryParam("overwrite", overwrite)
                 .ToRequest()
                 .WithHttpMethod().Post()
                 .WithAcceptApplicationJson()

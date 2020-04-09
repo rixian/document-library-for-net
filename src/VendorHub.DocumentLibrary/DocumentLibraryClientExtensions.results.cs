@@ -757,5 +757,44 @@ namespace VendorHub.DocumentLibrary
                 }
             }
         }
+
+        /// <summary>
+        /// Runs an Anti-Virus scan on a file.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Either the imported files or an error.</returns>
+        public static async Task<Result<AntiVirusScanResult>> AntiVirusScanFileResultAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            HttpResponseMessage response = await documentLibraryClient.AntiVirusScanFileHttpResponseAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            using (response)
+            {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return Result.Create(await response.DeserializeJsonContentAsync<AntiVirusScanResult>().ConfigureAwait(false));
+                    case HttpStatusCode.NoContent:
+                        return default;
+                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse.Error;
+                        }
+
+                    default:
+                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ImportFilesResultAsync)}").ConfigureAwait(false);
+                }
+            }
+        }
     }
 }

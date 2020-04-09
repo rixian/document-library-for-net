@@ -200,5 +200,15 @@ namespace VendorHub.DocumentLibrary
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The raw HttpResponseMessage.</returns>
         Task<HttpResponseMessage> ImportFilesHttpResponseAsync(Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Runs an Anti-Virus scan on a file.
+        /// </summary>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The raw HttpResponseMessage.</returns>
+        Task<HttpResponseMessage> AntiVirusScanFileHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default);
     }
 }

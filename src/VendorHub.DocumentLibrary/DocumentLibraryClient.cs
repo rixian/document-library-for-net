@@ -120,6 +120,11 @@ namespace VendorHub.DocumentLibrary
         /// </summary>
         protected IAsyncPolicy<HttpResponseMessage>? ImportFilesPolicy { get; set; }
 
+        /// <summary>
+        /// Gets or sets the policy for the AntiVirusScanFile http request.
+        /// </summary>
+        protected IAsyncPolicy<HttpResponseMessage>? AntiVirusScanFilePolicy { get; set; }
+
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> CreateLibraryHttpResponseAsync(CreateLibraryRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
@@ -487,6 +492,23 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+        /// <inheritdoc/>
+        public async Task<HttpResponseMessage> AntiVirusScanFileHttpResponseAsync(Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            IHttpRequestMessageBuilder requestBuilder = UrlBuilder
+                .Create("libraries/{libraryId}/cmd/avscan")
+                .ReplaceToken("{libraryId}", libraryId)
+                .SetQueryParam("path", path)
+                .SetQueryParam("tenantId", tenantId)
+                .ToRequest()
+                .WithHttpMethod().Post()
+                .WithAcceptApplicationJson();
+
+            requestBuilder = await this.PreviewAntiVirusScanFileAsync(requestBuilder).ConfigureAwait(false);
+            HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.AntiVirusScanFilePolicy, cancellationToken).ConfigureAwait(false);
+            return response;
+        }
+
         /// <summary>
         /// Optional method for configuring the HttpRequestMessage before sending the call to CreateLibrary.
         /// </summary>
@@ -663,6 +685,16 @@ namespace VendorHub.DocumentLibrary
         /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
         /// <returns>The updated IHttpRequestMessageBuilder.</returns>
         protected virtual Task<IHttpRequestMessageBuilder> PreviewImportFilesAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
+        {
+            return Task.FromResult(httpRequestMessageBuilder);
+        }
+
+        /// <summary>
+        /// Optional method for configuring the HttpRequestMessage before sending the call to AntiVirusScanFile.
+        /// </summary>
+        /// <param name="httpRequestMessageBuilder">The IHttpRequestMessageBuilder.</param>
+        /// <returns>The updated IHttpRequestMessageBuilder.</returns>
+        protected virtual Task<IHttpRequestMessageBuilder> PreviewAntiVirusScanFileAsync(IHttpRequestMessageBuilder httpRequestMessageBuilder)
         {
             return Task.FromResult(httpRequestMessageBuilder);
         }

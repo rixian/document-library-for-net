@@ -6,7 +6,9 @@ namespace VendorHub.DocumentLibrary
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
+    using System.Net.Mime;
 
     /// <summary>
     /// Represents a file response from an http call.
@@ -29,6 +31,18 @@ namespace VendorHub.DocumentLibrary
             this.Headers = headers;
             this.Stream = stream;
             this.response = response;
+
+            var cdHeader = headers?["Content-Disposition"]?.FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(cdHeader))
+            {
+                this.ContentDispositionHeader = new ContentDisposition(cdHeader);
+            }
+
+            var ctHeader = headers?["Content-Type"]?.FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(ctHeader))
+            {
+                this.ContentTypeHeader = new ContentType(ctHeader);
+            }
         }
 
         /// <summary>
@@ -45,6 +59,16 @@ namespace VendorHub.DocumentLibrary
         /// Gets the raw data stream.
         /// </summary>
         public Stream Stream { get; private set; }
+
+        /// <summary>
+        /// Gets the Content-Type header.
+        /// </summary>
+        public ContentType? ContentTypeHeader { get; private set; }
+
+        /// <summary>
+        /// Gets the Content-Disposition header.
+        /// </summary>
+        public ContentDisposition? ContentDispositionHeader { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the response contains the request data range.

@@ -488,5 +488,31 @@ namespace VendorHub.DocumentLibrary
 
             throw ApiException.Create(result.Error);
         }
+
+        /// <summary>
+        /// Runs an Anti-Virus scan on a file.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The uploaded file.</returns>
+        public static async Task<AntiVirusScanResult> AntiVirusScanFileAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, CloudPath path, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<AntiVirusScanResult> result = await documentLibraryClient.AntiVirusScanFileResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsResult)
+            {
+                return result.Value;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
     }
 }

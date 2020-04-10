@@ -5,7 +5,6 @@
     <CodeAnalysisRuleSet>..\shipping.ruleset</CodeAnalysisRuleSet>
     <Description>Client library for calling the VendorHub Document Library API.</Description>
     <PackageIconUrl>https://storagerixiannet.blob.core.windows.net/public/nuget/icons/nuget-vendorhub-256.png</PackageIconUrl>
-    <Configurations>Debug;Release;ProjRef</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,12 +12,12 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'ProjRef'">
+  <ItemGroup Condition="'$(Configuration)' != 'Debug'">
     <PackageReference Include="Rixian.Drive.Common" Version="0.5.5" />
     <PackageReference Include="Rixian.Extensions.Http.Client" Version="0.6.10" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'ProjRef'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <ProjectReference Include="..\..\..\drive-common\src\Rixian.Drive.Common\Rixian.Drive.Common.csproj" />
     <ProjectReference Include="..\..\..\extensions-http\src\Rixian.Extensions.Http.Client\Rixian.Extensions.Http.Client.csproj" />
   </ItemGroup>

@@ -5,14 +5,13 @@
     <CodeAnalysisRuleSet>../shipping.ruleset</CodeAnalysisRuleSet>
     <Description>Dependency Injection extensions for the VendorHub.DocumentLibrary library.</Description>
     <PackageIconUrl>https://storagerixiannet.blob.core.windows.net/public/nuget/icons/nuget-vendorhub-256.png</PackageIconUrl>
-    <Configurations>Debug;Release;ProjRef</Configurations>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'ProjRef'">
+  <ItemGroup Condition="'$(Configuration)' != 'Debug'">
     <PackageReference Include="Rixian.Extensions.Tokens" Version="0.4.10" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'ProjRef'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <ProjectReference Include="..\..\..\extensions-tokens\src\Rixian.Extensions.Tokens\Rixian.Extensions.Tokens.csproj" />
   </ItemGroup>
 

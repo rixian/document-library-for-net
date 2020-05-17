@@ -53,8 +53,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Configure the ITokenClient to use the previous HttpClient.
             serviceCollection
-                .AddTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName, options.TokenClientOptions)
-                .UseHttpClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientBackChannelHttpClientName);
+                .AddClientCredentialsTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName, options.TokenClientOptions)
+                .UseHttpClientForBackchannel(DocumentLibraryClientOptions.DocumentLibraryTokenClientBackChannelHttpClientName);
 
             // Configure the HttpClient with the ITokenClient for inserting tokens into the header.
             IHttpClientBuilder httpClientBuilder = serviceCollection
@@ -97,8 +97,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Configure the ITokenClient to use the previous HttpClient.
             serviceCollection
-                .AddTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName, options.TokenClientOptions)
-                .UseHttpClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientBackChannelHttpClientName);
+                .AddClientCredentialsTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName, options.TokenClientOptions)
+                .UseHttpClientForBackchannel(DocumentLibraryClientOptions.DocumentLibraryTokenClientBackChannelHttpClientName);
 
             // Configure the HttpClient with the ITokenClient for inserting tokens into the header.
             IHttpClientBuilder httpClientBuilder = serviceCollection

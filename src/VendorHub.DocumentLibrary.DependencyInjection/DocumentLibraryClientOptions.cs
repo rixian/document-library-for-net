@@ -29,7 +29,7 @@ namespace VendorHub.DocumentLibrary.DependencyInjection
         /// <summary>
         /// Gets or sets the options for the ITokenClient.
         /// </summary>
-        public TokenClientOptions? TokenClientOptions { get; set; }
+        public ClientCredentialsTokenClientOptions? TokenClientOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the uri of the Document Library api endpoint.

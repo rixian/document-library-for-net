@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug'">
-    <PackageReference Include="Rixian.Extensions.Tokens" Version="0.4.10" />
+    <PackageReference Include="Rixian.Extensions.Tokens" Version="0.5.11" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">

@@ -49,11 +49,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<Library>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(CreateLibraryResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(CreateLibraryResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<Library>();
+                        }
                 }
             }
         }
@@ -86,11 +89,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<ICollection<Library>>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListLibrariesResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListLibrariesResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<ICollection<Library>>();
+                        }
                 }
             }
         }
@@ -124,11 +130,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<Library>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(GetLibraryResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(GetLibraryResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<Library>();
+                        }
                 }
             }
         }
@@ -164,11 +173,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(SearchLibraryResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(SearchLibraryResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
+                        }
                 }
             }
         }
@@ -195,18 +207,8 @@ namespace VendorHub.DocumentLibrary
             {
                 case HttpStatusCode.OK:
                     {
-                        Stream responseStream = response.Content == null ? Stream.Null : await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                        var headers = response.Headers.ToDictionary(h => h.Key, h => h.Value);
-                        if (response.Content != null && response.Content.Headers != null)
-                        {
-                            foreach (KeyValuePair<string, IEnumerable<string>> item_ in response.Content.Headers)
-                            {
-                                headers[item_.Key] = item_.Value;
-                            }
-                        }
-
-                        var fileResponse = new HttpFileResponse(response.StatusCode, headers, responseStream, response);
-                        return Result.Create(fileResponse);
+                        Result<HttpFileResponse> fileResponse = await HttpFileResponse.CreateAsync(response).ConfigureAwait(false);
+                        return fileResponse;
                     }
 
                 case HttpStatusCode.NoContent:
@@ -220,12 +222,12 @@ namespace VendorHub.DocumentLibrary
                             if (response.IsContentProblem())
                             {
                                 HttpProblem problem = await response.DeserializeJsonContentAsync<HttpProblem>().ConfigureAwait(false);
-                                return new HttpProblemError(problem);
+                                return new HttpProblemError(problem).ToResult<HttpFileResponse>();
                             }
                             else
                             {
                                 ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                                return errorResponse.Error;
+                                return errorResponse.Error.ToResult<HttpFileResponse>();
                             }
                         }
                         finally
@@ -238,7 +240,7 @@ namespace VendorHub.DocumentLibrary
                     {
                         UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(DownloadContentResultAsync)}").ConfigureAwait(false);
                         response.Dispose();
-                        return error;
+                        return error.ToResult<HttpFileResponse>();
                     }
             }
         }
@@ -273,11 +275,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<LibraryItemInfo>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(GetItemInfoResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(GetItemInfoResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<LibraryItemInfo>();
+                        }
                 }
             }
         }
@@ -312,11 +317,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<IDictionary<string, string>>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListFileTagsResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListFileTagsResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<IDictionary<string, string>>();
+                        }
                 }
             }
         }
@@ -352,11 +360,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(UpsertFileTagsResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(UpsertFileTagsResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -391,11 +402,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ClearFileTagsResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ClearFileTagsResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -431,11 +445,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(RemoveFileTagResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(RemoveFileTagResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -470,11 +487,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(DeleteItemResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(DeleteItemResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -509,11 +529,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<ICollection<LibraryItemInfo>>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListChildrenResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ListChildrenResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<ICollection<LibraryItemInfo>>();
+                        }
                 }
             }
         }
@@ -548,11 +571,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<ExistsResponse>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ExistsResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ExistsResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<ExistsResponse>();
+                        }
                 }
             }
         }
@@ -588,11 +614,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(CopyResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(CopyResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -628,11 +657,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult();
+                        }
                 }
             }
         }
@@ -667,11 +699,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<LibraryDirectoryInfo>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(CreateDirectoryResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<LibraryDirectoryInfo>();
+                        }
                 }
             }
         }
@@ -709,11 +744,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<LibraryFileInfo>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(MoveResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<LibraryFileInfo>();
+                        }
                 }
             }
         }
@@ -749,11 +787,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<ICollection<LibraryFileInfo>>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ImportFilesResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ImportFilesResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<ICollection<LibraryFileInfo>>();
+                        }
                 }
             }
         }
@@ -788,11 +829,14 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.InternalServerError:
                         {
                             ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error;
+                            return errorResponse.Error.ToResult<AntiVirusScanResult>();
                         }
 
                     default:
-                        return await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(ImportFilesResultAsync)}").ConfigureAwait(false);
+                        {
+                            UnexpectedStatusCodeError error = await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(AntiVirusScanFileResultAsync)}").ConfigureAwait(false);
+                            return error.ToResult<AntiVirusScanResult>();
+                        }
                 }
             }
         }

@@ -10,6 +10,7 @@ namespace VendorHub.DocumentLibrary
     using System.Threading.Tasks;
     using Rixian.Drive.Common;
     using Rixian.Extensions.Errors;
+    using Rixian.Extensions.Http.Client;
 
     /// <summary>
     /// Extensions for the VendorHub Document Library api client.
@@ -33,7 +34,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<Library> result = await documentLibraryClient.CreateLibraryResultAsync(body, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -57,7 +58,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<ICollection<Library>> result = await documentLibraryClient.ListLibrariesResultAsync(tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -82,7 +83,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<Library> result = await documentLibraryClient.GetLibraryResultAsync(libraryId, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -109,7 +110,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<ICollection<SearchResult<LibrarySearchResult>>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -135,7 +136,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<HttpFileResponse> result = await documentLibraryClient.DownloadContentResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -161,7 +162,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<LibraryItemInfo> result = await documentLibraryClient.GetItemInfoResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -187,7 +188,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<IDictionary<string, string>> result = await documentLibraryClient.ListFileTagsResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -319,7 +320,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<ICollection<LibraryItemInfo>> result = await documentLibraryClient.ListChildrenResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -345,7 +346,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<ExistsResponse> result = await documentLibraryClient.ExistsResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -425,7 +426,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<LibraryDirectoryInfo> result = await documentLibraryClient.CreateDirectoryResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -454,7 +455,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<LibraryFileInfo> result = await documentLibraryClient.UploadFileResultAsync(libraryId, path, fileData, contentType, overwrite, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -481,7 +482,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<ICollection<LibraryFileInfo>> result = await documentLibraryClient.ImportFilesResultAsync(libraryId, importRecords, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }
@@ -507,7 +508,7 @@ namespace VendorHub.DocumentLibrary
 
             Result<AntiVirusScanResult> result = await documentLibraryClient.AntiVirusScanFileResultAsync(libraryId, path, tenantId, cancellationToken).ConfigureAwait(false);
 
-            if (result.IsResult)
+            if (result.IsSuccess)
             {
                 return result.Value;
             }

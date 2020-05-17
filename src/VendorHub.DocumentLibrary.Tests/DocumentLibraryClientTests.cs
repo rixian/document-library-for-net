@@ -15,6 +15,7 @@ using VendorHub.DocumentLibrary;
 using VendorHub.DocumentLibrary.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
+using static Rixian.Extensions.Errors.Prelude;
 
 public class DocumentLibraryClientTests
 {
@@ -67,7 +68,7 @@ public class DocumentLibraryClientTests
 
         serviceCollection.AddDocumentLibraryClient(new DocumentLibraryClientOptions
         {
-            TokenClientOptions = new TokenClientOptions
+            TokenClientOptions = new ClientCredentialsTokenClientOptions
             {
                 Authority = string.Empty,
                 ClientId = string.Empty,
@@ -85,9 +86,9 @@ public class DocumentLibraryClientTests
         ITokenInfo tokenInfo = Substitute.For<ITokenInfo>();
         tokenInfo.AccessToken.Returns(accessToken);
         ITokenClient tokenClient = Substitute.For<ITokenClient>();
-        tokenClient.GetTokenAsync(Arg.Any<bool>()).Returns(tokenInfo);
+        tokenClient.GetTokenAsync(Arg.Any<bool>()).Returns(Result(tokenInfo));
         ITokenClientFactory tokenClientFactory = Substitute.For<ITokenClientFactory>();
-        tokenClientFactory.GetTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName).Returns(tokenClient);
+        tokenClientFactory.GetTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName).Returns(Result(tokenClient));
         return (accessToken, tokenClientFactory);
     }
 }

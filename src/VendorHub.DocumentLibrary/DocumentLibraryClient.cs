@@ -125,6 +125,8 @@ namespace VendorHub.DocumentLibrary
         /// </summary>
         protected IAsyncPolicy<HttpResponseMessage>? AntiVirusScanFilePolicy { get; set; }
 
+#nullable disable
+
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> CreateLibraryHttpResponseAsync(CreateLibraryRequest body, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
@@ -172,9 +174,11 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+#nullable enable
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> SearchLibraryHttpResponseAsync(Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default)
         {
+#nullable disable
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/search")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -452,9 +456,12 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+#nullable enable
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> UploadFileHttpResponseAsync(Guid libraryId, CloudPath path, Stream fileData, string? contentType = null, bool overwrite = false, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+#nullable disable
+
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/create")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -471,9 +478,11 @@ namespace VendorHub.DocumentLibrary
             return response;
         }
 
+#nullable enable
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> ImportFilesHttpResponseAsync(Guid libraryId, IEnumerable<ImportRecord> importRecords, CloudPath? path = null, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+#nullable disable
             IHttpRequestMessageBuilder requestBuilder = UrlBuilder
                 .Create("libraries/{libraryId}/cmd/import")
                 .ReplaceToken("{libraryId}", libraryId)
@@ -508,6 +517,8 @@ namespace VendorHub.DocumentLibrary
             HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.AntiVirusScanFilePolicy, cancellationToken).ConfigureAwait(false);
             return response;
         }
+
+#nullable enable
 
         /// <summary>
         /// Optional method for configuring the HttpRequestMessage before sending the call to CreateLibrary.

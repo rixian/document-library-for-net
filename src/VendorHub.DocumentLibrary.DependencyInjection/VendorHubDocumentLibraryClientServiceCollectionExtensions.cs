@@ -60,13 +60,13 @@ namespace Microsoft.Extensions.DependencyInjection
             IHttpClientBuilder httpClientBuilder = serviceCollection
                 .AddHttpClient(DocumentLibraryClientOptions.DocumentLibraryHttpClientName, c => c.BaseAddress = options.DocumentLibraryApiUri)
                 .UseSslProtocols(SslProtocols.Tls12)
-                .UseApiVersion(options.ApiVersion ?? "2019-09-01", null)
+                .UseApiVersion(options.ApiVersion ?? "2019-09-01", null!)
                 .UseTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName)
                 .AddTypedClient<IDocumentLibraryClient, TClient>();
 
             if (!string.IsNullOrWhiteSpace(options.ApiKey))
             {
-                httpClientBuilder.UseHeader(options.ApiKeyHeaderName ?? "Subscription-Key", options.ApiKey);
+                httpClientBuilder.UseHeader(options.ApiKeyHeaderName ?? "Subscription-Key", options.ApiKey!);
             }
 
             return serviceCollection;
@@ -104,13 +104,13 @@ namespace Microsoft.Extensions.DependencyInjection
             IHttpClientBuilder httpClientBuilder = serviceCollection
                 .AddHttpClient(DocumentLibraryClientOptions.DocumentLibraryHttpClientName, c => c.BaseAddress = options.DocumentLibraryApiUri)
                 .UseSslProtocols(SslProtocols.Tls12)
-                .UseApiVersion(options.ApiVersion ?? "2019-09-01", null)
+                .UseApiVersion(options.ApiVersion ?? "2019-09-01", null!)
                 .UseTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName)
                 .AddTypedClient(factory);
 
             if (!string.IsNullOrWhiteSpace(options.ApiKey))
             {
-                httpClientBuilder.UseHeader(options.ApiKeyHeaderName ?? "Subscription-Key", options.ApiKey);
+                httpClientBuilder.UseHeader(options.ApiKeyHeaderName ?? "Subscription-Key", options.ApiKey!);
             }
 
             return serviceCollection;

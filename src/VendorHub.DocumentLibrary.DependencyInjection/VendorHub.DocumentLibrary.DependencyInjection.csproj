@@ -7,12 +7,8 @@
     <PackageIconUrl>https://storagerixiannet.blob.core.windows.net/public/nuget/icons/nuget-vendorhub-256.png</PackageIconUrl>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'Debug'">
+  <ItemGroup>
     <PackageReference Include="Rixian.Extensions.Tokens" Version="0.5.11" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <ProjectReference Include="..\..\..\extensions-tokens\src\Rixian.Extensions.Tokens\Rixian.Extensions.Tokens.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -80,7 +80,7 @@ namespace VendorHub.DocumentLibrary
                 isWriting = true;
 
                 var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
-                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(this.discriminator, this.GetSubtypeDiscriminator(value.GetType())));
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(this.discriminator, GetSubtypeDiscriminator(value.GetType())));
                 writer.WriteToken(jObject.CreateReader());
             }
             finally
@@ -105,7 +105,7 @@ namespace VendorHub.DocumentLibrary
             }
 
             var discriminator = Newtonsoft.Json.Linq.Extensions.Value<string>(jObject.GetValue(this.discriminator, StringComparison.OrdinalIgnoreCase));
-            Type subtype = this.GetObjectSubtype(objectType, discriminator);
+            Type subtype = GetObjectSubtype(objectType, discriminator);
 
             var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
             if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != this.discriminator))
@@ -124,7 +124,7 @@ namespace VendorHub.DocumentLibrary
             }
         }
 
-        private Type GetObjectSubtype(Type objectType, string discriminator)
+        private static Type GetObjectSubtype(Type objectType, string discriminator)
         {
             foreach (JsonInheritanceAttribute attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
             {
@@ -137,7 +137,7 @@ namespace VendorHub.DocumentLibrary
             return objectType;
         }
 
-        private string GetSubtypeDiscriminator(Type objectType)
+        private static string GetSubtypeDiscriminator(Type objectType)
         {
             foreach (JsonInheritanceAttribute attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
             {

@@ -355,7 +355,7 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.OK:
                         return Result.Default;
                     case HttpStatusCode.NoContent:
-                        return default;
+                        return Result.Default;
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {

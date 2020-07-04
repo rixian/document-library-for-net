@@ -23,7 +23,7 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the search score.
         /// </summary>
-        [JsonProperty("@search.score", Required = Required.Always)]
+        [JsonProperty("score", Required = Required.Always)]
         [Required(AllowEmptyStrings = true)]
         public double? SearchScore { get; set; }
 

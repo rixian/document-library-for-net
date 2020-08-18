@@ -199,6 +199,10 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public async Task<HttpResponseMessage> SearchLibraryHttpResponseAsync(Guid libraryId, SearchRequest request, Guid? tenantId = null, CancellationToken cancellationToken = default)
         {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 #nullable disable
 
             var queryComponents = new List<string>();

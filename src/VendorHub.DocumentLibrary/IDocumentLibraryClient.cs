@@ -184,7 +184,6 @@ namespace VendorHub.DocumentLibrary
         /// </summary>
         /// <param name="libraryId">The library ID.</param>
         /// <param name="request">The request parameters for the search.</param>
-        /// <param name="query">The search query.</param>
         /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>The raw HttpResponseMessage.</returns>

@@ -34,7 +34,7 @@ namespace VendorHub.DocumentLibrary.DependencyInjection
         /// <summary>
         /// Gets or sets the uri of the Document Library api endpoint.
         /// </summary>
-        public Uri? DocumentLibraryApiUri { get; set; }
+        public Uri? DocumentLibraryApiUri { get; set; } = new Uri("https://api.vendorhub.io");
 
         /// <summary>
         /// Gets or sets the api key used for the IAM api.

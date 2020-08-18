@@ -54,7 +54,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (string.IsNullOrWhiteSpace(options.TokenClientOptions.Authority))
             {
                 options.TokenClientOptions.Authority = "https://identity.vendorhub.io";
-            };
+            }
 
             // Configure the ITokenClient to use the previous HttpClient.
             serviceCollection

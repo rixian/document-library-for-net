@@ -39,6 +39,7 @@ public class SerializationTests
             ContentType = MediaTypeNames.Application.Octet,
             CreatedOn = DateTimeOffset.UtcNow,
             FullPath = "C:/foo.txt",
+            LibraryPath = "/foo.txt",
             Name = "foo.txt",
             LastAccessedOn = DateTimeOffset.UtcNow,
             LastModifiedOn = DateTimeOffset.UtcNow,

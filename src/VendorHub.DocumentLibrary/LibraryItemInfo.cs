@@ -42,6 +42,14 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the full path of the item.
         /// </summary>
         [JsonConverter(typeof(CloudPathJsonConverter))]
+        [JsonProperty("libraryPath", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public CloudPath? LibraryPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the full path of the item.
+        /// </summary>
+        [JsonConverter(typeof(CloudPathJsonConverter))]
         [JsonProperty("fullPath", Required = Required.Always)]
         [Required(AllowEmptyStrings = true)]
         public CloudPath? FullPath { get; set; }

@@ -180,6 +180,17 @@ namespace VendorHub.DocumentLibrary
         Task<HttpResponseMessage> SearchLibraryHttpResponseAsync(Guid libraryId, string query, Guid? tenantId = null, string? filter = null, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Searches a library for files according to the query.
+        /// </summary>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="request">The request parameters for the search.</param>
+        /// <param name="query">The search query.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The raw HttpResponseMessage.</returns>
+        Task<HttpResponseMessage> SearchLibraryHttpResponseAsync(Guid libraryId, SearchRequest request, Guid? tenantId = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Updates or inserts specific tags on a file.
         /// </summary>
         /// <param name="libraryId">The library ID.</param>

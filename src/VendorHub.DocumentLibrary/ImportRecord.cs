@@ -6,7 +6,7 @@ namespace VendorHub.DocumentLibrary
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Net.Mime;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// A record to be imported into a library.
@@ -16,40 +16,44 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the file name of the imported record.
         /// </summary>
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonPropertyName("name")]
         [Required(AllowEmptyStrings = false)]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the alternate ID of the record. E.g. the path of an esiting blob in Azure Blob Storage.
         /// </summary>
-        [JsonProperty("alternateId", Required = Required.Always)]
+        [JsonPropertyName("alternateId")]
         [Required(AllowEmptyStrings = true)]
         public string AlternateId { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the length of the file data.
         /// </summary>
-        [JsonProperty("length", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("length")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public long? Length { get; set; }
 
         /// <summary>
         /// Gets or sets the content type of the file.
         /// </summary>
-        [JsonProperty("contentType", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("contentType")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ContentType { get; set; } = MediaTypeNames.Application.Octet;
 
         /// <summary>
         /// Gets or sets the specific location to store the file. Optional.
         /// </summary>
-        [JsonProperty("importPath", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("importPath")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? ImportPath { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not an
         /// existing record by the same name should be overwritten.
         /// </summary>
-        [JsonProperty("overwrite", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("overwrite")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool Overwrite { get; set; } = false;
 
         /// <summary>

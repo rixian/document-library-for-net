@@ -5,7 +5,7 @@ namespace VendorHub.DocumentLibrary
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
     using Rixian.Drive.Common;
 
     /// <summary>
@@ -16,7 +16,7 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the library name.
         /// </summary>
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonPropertyName("name")]
         [Required(AllowEmptyStrings = true)]
         public string? Name { get; set; }
 
@@ -24,13 +24,15 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the library root storage location.
         /// </summary>
         [JsonConverter(typeof(CloudPathJsonConverter))]
-        [JsonProperty("location", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("location")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CloudPath? Location { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the library has search enabled or not.
         /// </summary>
-        [JsonProperty("enableSearch", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("enableSearch")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool EnableSearch { get; set; }
 
         /// <summary>

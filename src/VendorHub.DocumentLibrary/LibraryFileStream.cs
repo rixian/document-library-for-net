@@ -7,7 +7,7 @@ namespace VendorHub.DocumentLibrary
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Net.Mime;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Represents a file stream of a file.
@@ -17,62 +17,62 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the tenant ID.
         /// </summary>
-        [JsonProperty("tenantId", Required = Required.Always)]
+        [JsonPropertyName("tenantId")]
         [Required(AllowEmptyStrings = true)]
         public Guid TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the partition ID.
         /// </summary>
-        [JsonProperty("partitionId", Required = Required.Always)]
+        [JsonPropertyName("partitionId")]
         [Required(AllowEmptyStrings = true)]
         public Guid PartitionId { get; set; }
 
         /// <summary>
         /// Gets or sets the file ID.
         /// </summary>
-        [JsonProperty("fileId", Required = Required.Always)]
+        [JsonPropertyName("fileId")]
         [Required(AllowEmptyStrings = true)]
         public Guid FileId { get; set; }
 
         /// <summary>
         /// Gets or sets the create on timestamp.
         /// </summary>
-        [JsonProperty("createdOn", Required = Required.Always)]
+        [JsonPropertyName("createdOn")]
         [Required(AllowEmptyStrings = true)]
         public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the last accessed timestamp.
         /// </summary>
-        [JsonProperty("lastAccessedOn", Required = Required.Always)]
+        [JsonPropertyName("lastAccessedOn")]
         [Required(AllowEmptyStrings = true)]
         public DateTimeOffset LastAccessedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified on timestamp.
         /// </summary>
-        [JsonProperty("lastModifiedOn", Required = Required.Always)]
+        [JsonPropertyName("lastModifiedOn")]
         [Required(AllowEmptyStrings = true)]
         public DateTimeOffset LastModifiedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the stream name.
         /// </summary>
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonPropertyName("name")]
         [Required(AllowEmptyStrings = true)]
         public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the length of the file stream in bytes.
         /// </summary>
-        [JsonProperty("length", Required = Required.Always)]
+        [JsonPropertyName("length")]
         public long Length { get; set; }
 
         /// <summary>
         /// Gets or sets the file stream content type. Defaults to 'application/octet-stream'.
         /// </summary>
-        [JsonProperty("contentType", Required = Required.Always)]
+        [JsonPropertyName("contentType")]
         [Required(AllowEmptyStrings = true)]
         public string ContentType { get; set; } = MediaTypeNames.Application.Octet;
 

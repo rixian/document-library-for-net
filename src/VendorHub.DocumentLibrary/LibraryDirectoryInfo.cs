@@ -3,7 +3,8 @@
 
 namespace VendorHub.DocumentLibrary
 {
-    using Newtonsoft.Json;
+    using System.ComponentModel.DataAnnotations;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Represents a library directory item.
@@ -13,7 +14,8 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets a value indicating whether the directory has children.
         /// </summary>
-        [JsonProperty("hasChildren", Required = Required.Always)]
+        [JsonPropertyName("hasChildren")]
+        [Required]
         public bool HasChildren { get; set; }
     }
 }

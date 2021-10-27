@@ -16,7 +16,7 @@ jobs:
 
 - job: Linux
   pool:
-    vmImage: Ubuntu 16.04
+    vmImage: ubuntu-latest
   steps:
   - checkout: self
     clean: true
@@ -38,7 +38,7 @@ jobs:
   - Linux
   - macOS
   pool:
-    vmImage: Ubuntu 16.04
+    vmImage: ubuntu-latest
   condition: succeededOrFailed()
   steps:
   - checkout: self

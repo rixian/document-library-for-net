@@ -37,7 +37,7 @@ public class DocumentLibraryClientTests
         var mockHttp = new MockHttpMessageHandler();
         MockedRequest request = mockHttp
             .When(HttpMethod.Get, "*/libraries")
-            .Respond("application/json", $"[{{'libraryId': '{libraryId}', 'tenantId': '{tenantId}', 'name': '{name}', 'location': '{location}'}}]");
+            .Respond("application/json", $"[{{\"libraryId\": \"{libraryId}\", \"tenantId\": \"{tenantId}\", \"name\": \"{name}\", \"location\": \"{location}\"}}]");
 
         IServiceProvider services = ConfigureServices(mockHttp);
         IDocumentLibraryClient docLibClient = services.GetRequiredService<IDocumentLibraryClient>();

@@ -246,7 +246,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>

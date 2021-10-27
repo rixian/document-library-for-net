@@ -12,6 +12,14 @@ namespace VendorHub.DocumentLibrary
     public class LibraryFileInfo : LibraryItemInfo
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="LibraryFileInfo"/> class.
+        /// </summary>
+        public LibraryFileInfo()
+        {
+            this.Type = "file";
+        }
+
+        /// <summary>
         /// Gets or sets the length of the file in bytes.
         /// </summary>
         [JsonPropertyName("length")]

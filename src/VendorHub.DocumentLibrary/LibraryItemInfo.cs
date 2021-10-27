@@ -16,6 +16,13 @@ namespace VendorHub.DocumentLibrary
     public class LibraryItemInfo
     {
         /// <summary>
+        /// Gets or sets the type of library item.
+        /// </summary>
+        [JsonPropertyName("type")]
+        [Required]
+        public string Type { get; set; } = "unknown";
+
+        /// <summary>
         /// Gets or sets the ID of the library item.
         /// </summary>
         [JsonPropertyName("id")]
@@ -26,14 +33,12 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the tenant ID.
         /// </summary>
         [JsonPropertyName("tenantId")]
-        [Required(AllowEmptyStrings = true)]
         public Guid TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the partition ID.
         /// </summary>
         [JsonPropertyName("partitionId")]
-        [Required(AllowEmptyStrings = true)]
         public Guid PartitionId { get; set; }
 
         /// <summary>

@@ -18,46 +18,83 @@ namespace VendorHub.DocumentLibrary
         /// <inheritdoc/>
         public override LibraryItemInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            Utf8JsonReader readerClone = reader;
-
-            if (readerClone.TokenType != JsonTokenType.StartObject)
+            var doc = System.Text.Json.JsonDocument.ParseValue(ref reader);
+            if (doc.RootElement.TryGetProperty("type", out JsonElement type))
             {
-                throw new JsonException();
+                LibraryItemInfo? libraryItemInfo = type.GetString() switch
+                {
+                    "file" => JsonSerializer.Deserialize<LibraryFileInfo>(doc.RootElement.GetRawText()),
+                    "directory" => JsonSerializer.Deserialize<LibraryDirectoryInfo>(doc.RootElement.GetRawText()),
+                    _ => throw new JsonException()
+                };
+                return libraryItemInfo;
             }
 
-            readerClone.Read();
-            if (readerClone.TokenType != JsonTokenType.PropertyName)
-            {
-                throw new JsonException();
-            }
-
-            string? propertyName = readerClone.GetString();
-            if (propertyName != "type")
-            {
-                throw new JsonException();
-            }
-
-            readerClone.Read();
-            if (readerClone.TokenType != JsonTokenType.Number)
-            {
-                throw new JsonException();
-            }
-
-            string? typeDiscriminator = reader.GetString();
-            LibraryItemInfo? libraryItemInfo = typeDiscriminator switch
-            {
-                "file" => JsonSerializer.Deserialize<LibraryFileInfo>(ref reader),
-                "directory" => JsonSerializer.Deserialize<LibraryDirectoryInfo>(ref reader),
-                _ => throw new JsonException()
-            };
-
-            return libraryItemInfo;
+            throw new JsonException();
         }
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, LibraryItemInfo libraryItemInfo, JsonSerializerOptions options)
         {
-            JsonSerializer.Serialize(writer, libraryItemInfo, libraryItemInfo?.GetType() ?? typeof(LibraryItemInfo), options);
+            writer.WriteStartObject();
+
+            Action writeExtras = null;
+
+            if (libraryItemInfo is LibraryFileInfo file)
+            {
+                writer.WriteString("type", "file");
+
+                writeExtras = () =>
+                {
+                    writer.WriteNumber("length", file.Length);
+                    writer.WriteString("contentType", file.ContentType);
+                    writer.WriteBoolean("isShortcut", file.IsShortcut);
+                    writer.WriteString("alternateId", file.AlternateId);
+                };
+            }
+            else if (libraryItemInfo is LibraryDirectoryInfo dir)
+            {
+                writer.WriteString("type", "directory");
+
+                writeExtras = () =>
+                {
+                    writer.WriteBoolean("hasChildren", dir.HasChildren);
+                };
+            }
+
+            writer.WriteString("id", libraryItemInfo.Id);
+            writer.WriteString("tenantId", libraryItemInfo.TenantId);
+            writer.WriteString("partitionId", libraryItemInfo.PartitionId);
+            writer.WriteString("libraryPath", libraryItemInfo.LibraryPath.ToString());
+            writer.WriteString("fullPath", libraryItemInfo.FullPath.ToString());
+            writer.WriteString("createdOn", libraryItemInfo.CreatedOn);
+            writer.WriteString("lastAccessedOn", libraryItemInfo.LastAccessedOn);
+            writer.WriteString("lastModifiedOn", libraryItemInfo.LastModifiedOn);
+            writer.WriteString("name", libraryItemInfo.Name);
+
+            if (libraryItemInfo.ParentDirectoryId is null)
+            {
+                writer.WriteNull("parentDirectoryId");
+            }
+            else
+            {
+                writer.WriteString("parentDirectoryId", libraryItemInfo.ParentDirectoryId.Value);
+            }
+
+            writer.WriteString("attributes", libraryItemInfo.Attributes);
+
+            writeExtras?.Invoke();
+
+            if (libraryItemInfo.AdditionalProperties is object)
+            {
+                foreach (var item in libraryItemInfo.AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value, item.Value.GetType(), options);
+                }
+            }
+
+            writer.WriteEndObject();
         }
     }
 }

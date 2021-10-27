@@ -17,14 +17,12 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the library ID.
         /// </summary>
         [JsonPropertyName("libraryId")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Guid LibraryId { get; set; }
 
         /// <summary>
         /// Gets or sets the tenantID.
         /// </summary>
         [JsonPropertyName("tenantId")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Guid TenantId { get; set; }
 
         /// <summary>
@@ -46,14 +44,12 @@ namespace VendorHub.DocumentLibrary
         /// Gets or sets the library creation timestamp.
         /// </summary>
         [JsonPropertyName("createdOn")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether search is enabled for this library or not.
         /// </summary>
         [JsonPropertyName("isSearchEnabled")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool IsSearchEnabled { get; set; }
 
         /// <summary>

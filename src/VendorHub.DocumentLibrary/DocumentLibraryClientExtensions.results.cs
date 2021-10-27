@@ -42,7 +42,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -80,7 +80,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<Library>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<Library>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -119,7 +119,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -160,7 +160,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -200,7 +200,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -297,7 +297,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<LibraryItemInfo>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<LibraryItemInfo>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -337,7 +337,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<IDictionary<string, string>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<IDictionary<string, string>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -543,7 +543,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<LibraryItemInfo>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<LibraryItemInfo>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -583,7 +583,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ExistsResponse>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ExistsResponse>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -709,7 +709,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<LibraryDirectoryInfo>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<LibraryDirectoryInfo>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -752,7 +752,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<LibraryFileInfo>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<LibraryFileInfo>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -793,7 +793,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<ICollection<LibraryFileInfo>>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<LibraryFileInfo>>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
@@ -833,7 +833,7 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.Create(await response.DeserializeJsonContentAsync<AntiVirusScanResult>().ConfigureAwait(false));
+                        return Result.New(await response.DeserializeJsonContentAsync<AntiVirusScanResult>().ConfigureAwait(false));
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {

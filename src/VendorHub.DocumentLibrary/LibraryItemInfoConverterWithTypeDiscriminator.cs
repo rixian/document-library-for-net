@@ -4,6 +4,7 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
+    using System.Collections.Generic;
     using System.Text.Json;
     using System.Text.Json.Serialization;
 
@@ -27,7 +28,7 @@ namespace VendorHub.DocumentLibrary
                     "directory" => JsonSerializer.Deserialize<LibraryDirectoryInfo>(doc.RootElement.GetRawText()),
                     _ => throw new JsonException()
                 };
-                return libraryItemInfo;
+                return libraryItemInfo!;
             }
 
             throw new JsonException();
@@ -38,7 +39,7 @@ namespace VendorHub.DocumentLibrary
         {
             writer.WriteStartObject();
 
-            Action writeExtras = null;
+            Action? writeExtras = null;
 
             if (libraryItemInfo is LibraryFileInfo file)
             {
@@ -65,8 +66,8 @@ namespace VendorHub.DocumentLibrary
             writer.WriteString("id", libraryItemInfo.Id);
             writer.WriteString("tenantId", libraryItemInfo.TenantId);
             writer.WriteString("partitionId", libraryItemInfo.PartitionId);
-            writer.WriteString("libraryPath", libraryItemInfo.LibraryPath.ToString());
-            writer.WriteString("fullPath", libraryItemInfo.FullPath.ToString());
+            writer.WriteString("libraryPath", libraryItemInfo.LibraryPath?.ToString());
+            writer.WriteString("fullPath", libraryItemInfo.FullPath?.ToString());
             writer.WriteString("createdOn", libraryItemInfo.CreatedOn);
             writer.WriteString("lastAccessedOn", libraryItemInfo.LastAccessedOn);
             writer.WriteString("lastModifiedOn", libraryItemInfo.LastModifiedOn);
@@ -87,7 +88,7 @@ namespace VendorHub.DocumentLibrary
 
             if (libraryItemInfo.AdditionalProperties is object)
             {
-                foreach (var item in libraryItemInfo.AdditionalProperties)
+                foreach (KeyValuePair<string, object> item in libraryItemInfo.AdditionalProperties)
                 {
                     writer.WritePropertyName(item.Key);
                     JsonSerializer.Serialize(writer, item.Value, item.Value.GetType(), options);

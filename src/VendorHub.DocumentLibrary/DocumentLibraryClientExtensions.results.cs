@@ -42,12 +42,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<Library>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<Library>();
                         }
 
                     default:
@@ -80,12 +80,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<Library>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ICollection<Library>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ICollection<Library>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ICollection<Library>>();
                         }
 
                     default:
@@ -119,12 +119,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<Library>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<Library>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<Library>();
                         }
 
                     default:
@@ -160,12 +160,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
                         }
 
                     default:
@@ -200,12 +200,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ICollection<SearchResult<LibrarySearchResult>>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ICollection<SearchResult<LibrarySearchResult>>>();
                         }
 
                     default:
@@ -250,13 +250,13 @@ namespace VendorHub.DocumentLibrary
                         {
                             if (response.IsContentProblem())
                             {
-                                HttpProblem problem = await response.DeserializeJsonContentAsync<HttpProblem>().ConfigureAwait(false);
-                                return new HttpProblemError(problem).ToResult<HttpFileResponse>();
+                                HttpProblem? problem = await response.DeserializeJsonContentAsync<HttpProblem>().ConfigureAwait(false);
+                                return new HttpProblemError(problem!).ToResult<HttpFileResponse>();
                             }
                             else
                             {
-                                ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                                return errorResponse.Error.ToResult<HttpFileResponse>();
+                                ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                                return errorResponse!.Error!.ToResult<HttpFileResponse>();
                             }
                         }
                         finally
@@ -297,12 +297,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<LibraryItemInfo>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<LibraryItemInfo>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<LibraryItemInfo>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<LibraryItemInfo>();
                         }
 
                     default:
@@ -337,12 +337,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<IDictionary<string, string>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<IDictionary<string, string>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<IDictionary<string, string>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<IDictionary<string, string>>();
                         }
 
                     default:
@@ -383,8 +383,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -424,8 +424,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -466,8 +466,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -507,8 +507,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -543,12 +543,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<LibraryItemInfo>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ICollection<LibraryItemInfo>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ICollection<LibraryItemInfo>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ICollection<LibraryItemInfo>>();
                         }
 
                     default:
@@ -583,12 +583,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ExistsResponse>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ExistsResponse>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ExistsResponse>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ExistsResponse>();
                         }
 
                     default:
@@ -630,8 +630,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -673,8 +673,8 @@ namespace VendorHub.DocumentLibrary
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult();
                         }
 
                     default:
@@ -709,12 +709,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<LibraryDirectoryInfo>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<LibraryDirectoryInfo>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<LibraryDirectoryInfo>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<LibraryDirectoryInfo>();
                         }
 
                     default:
@@ -752,12 +752,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<LibraryFileInfo>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<LibraryFileInfo>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<LibraryFileInfo>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<LibraryFileInfo>();
                         }
 
                     default:
@@ -793,12 +793,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<ICollection<LibraryFileInfo>>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<ICollection<LibraryFileInfo>>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<ICollection<LibraryFileInfo>>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse!.Error!.ToResult<ICollection<LibraryFileInfo>>();
                         }
 
                     default:
@@ -833,12 +833,12 @@ namespace VendorHub.DocumentLibrary
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return Result.New(await response.DeserializeJsonContentAsync<AntiVirusScanResult>().ConfigureAwait(false));
+                        return Result.New((await response.DeserializeJsonContentAsync<AntiVirusScanResult>().ConfigureAwait(false)) !);
                     case HttpStatusCode.BadRequest:
                     case HttpStatusCode.InternalServerError:
                         {
-                            ErrorResponse errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
-                            return errorResponse.Error.ToResult<AntiVirusScanResult>();
+                            ErrorResponse? errorResponse = await response.DeserializeJsonContentAsync<ErrorResponse>().ConfigureAwait(false);
+                            return errorResponse?.Error?.ToResult<AntiVirusScanResult>() ?? Result.Fail(await UnexpectedStatusCodeError.CreateAsync(response, $"{nameof(IDocumentLibraryClient)}.{nameof(AntiVirusScanFileResultAsync)}").ConfigureAwait(false));
                         }
 
                     default:

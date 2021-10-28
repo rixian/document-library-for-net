@@ -49,7 +49,7 @@ public class SerializationTests
         };
 
         var serialized = JsonSerializer.Serialize(file);
-        LibraryItemInfo libItem = JsonSerializer.Deserialize<LibraryItemInfo>(serialized);
+        LibraryItemInfo? libItem = JsonSerializer.Deserialize<LibraryItemInfo>(serialized);
 
         libItem.Should().NotBeNull();
         libItem.Should().BeOfType<LibraryFileInfo>();

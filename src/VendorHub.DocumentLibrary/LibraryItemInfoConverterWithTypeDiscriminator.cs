@@ -26,7 +26,7 @@ namespace VendorHub.DocumentLibrary
                 {
                     "file" => JsonSerializer.Deserialize<LibraryFileInfo>(doc.RootElement.GetRawText()),
                     "directory" => JsonSerializer.Deserialize<LibraryDirectoryInfo>(doc.RootElement.GetRawText()),
-                    _ => throw new JsonException()
+                    _ => throw new JsonException(),
                 };
                 return libraryItemInfo!;
             }

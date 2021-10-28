@@ -80,7 +80,7 @@ public class DocumentLibraryClientTests
         return serviceCollection.BuildServiceProvider();
     }
 
-    private static (string accessToken, ITokenClientFactory tokenClientFactory) MockTokenClientFactory()
+    private static (string AccessToken, ITokenClientFactory TokenClientFactory) MockTokenClientFactory()
     {
         var accessToken = Guid.NewGuid().ToString();
         ITokenInfo tokenInfo = Substitute.For<ITokenInfo>();

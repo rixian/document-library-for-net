@@ -51,6 +51,11 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.AddHttpClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientBackChannelHttpClientName)
                 .UseSslProtocols(SslProtocols.Tls12);
 
+            if (string.IsNullOrWhiteSpace(options.TokenClientOptions.Authority))
+            {
+                options.TokenClientOptions.Authority = "https://identity.vendorhub.io";
+            }
+
             // Configure the ITokenClient to use the previous HttpClient.
             serviceCollection
                 .AddClientCredentialsTokenClient(DocumentLibraryClientOptions.DocumentLibraryTokenClientName, options.TokenClientOptions)

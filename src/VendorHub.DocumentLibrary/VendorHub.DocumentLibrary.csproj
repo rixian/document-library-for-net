@@ -11,7 +11,7 @@
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
     <PackageReference Include="Rixian.Drive.Common" Version="0.5.5" />
-    <PackageReference Include="Rixian.Extensions.Http.Client" Version="0.8.9" />
+    <PackageReference Include="Rixian.Extensions.Http.Client" Version="2.1.12" />
   </ItemGroup>
 
 </Project>

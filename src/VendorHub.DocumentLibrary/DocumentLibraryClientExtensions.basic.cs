@@ -36,7 +36,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -60,7 +60,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -85,7 +85,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -112,7 +112,33 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
+            }
+
+            throw ApiException.Create(result.Error);
+        }
+
+        /// <summary>
+        /// Searches a library for files according to the query.
+        /// </summary>
+        /// <param name="documentLibraryClient">The IDocumentLibraryClient instance.</param>
+        /// <param name="libraryId">The library ID.</param>
+        /// <param name="request">The request parameters for the search.</param>
+        /// <param name="tenantId">Optional. Specifies which tenant to use.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>The search results.</returns>
+        public static async Task<ICollection<SearchResult<LibrarySearchResult>>> SearchLibraryAsync(this IDocumentLibraryClient documentLibraryClient, Guid libraryId, SearchRequest request, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (documentLibraryClient is null)
+            {
+                throw new ArgumentNullException(nameof(documentLibraryClient));
+            }
+
+            Result<ICollection<SearchResult<LibrarySearchResult>>> result = await documentLibraryClient.SearchLibraryResultAsync(libraryId, request, tenantId, cancellationToken).ConfigureAwait(false);
+
+            if (result.IsSuccess)
+            {
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -138,7 +164,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -164,7 +190,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -190,7 +216,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -220,7 +246,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -246,7 +272,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -273,7 +299,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -299,7 +325,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -322,7 +348,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -348,7 +374,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -378,7 +404,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -405,7 +431,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -428,7 +454,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -457,7 +483,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -484,7 +510,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -510,7 +536,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);

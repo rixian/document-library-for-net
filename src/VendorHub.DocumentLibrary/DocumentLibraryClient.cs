@@ -8,6 +8,7 @@ namespace VendorHub.DocumentLibrary
     using System.IO;
     using System.Net.Http;
     using System.Net.Mime;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Polly;
@@ -192,6 +193,59 @@ namespace VendorHub.DocumentLibrary
             requestBuilder = await this.PreviewSearchLibraryAsync(requestBuilder).ConfigureAwait(false);
             HttpResponseMessage response = await this.SendRequestWithPolicy(requestBuilder, this.SearchLibraryPolicy, cancellationToken).ConfigureAwait(false);
             return response;
+        }
+
+#nullable enable
+        /// <inheritdoc/>
+        public async Task<HttpResponseMessage> SearchLibraryHttpResponseAsync(Guid libraryId, SearchRequest request, Guid? tenantId = null, CancellationToken cancellationToken = default)
+        {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+#nullable disable
+
+            var queryComponents = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(request.NameQuery))
+            {
+                queryComponents.Add($"name:('{request.NameQuery}')");
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.PathQuery))
+            {
+                queryComponents.Add($"path:('{request.PathQuery}')");
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.RawQuery))
+            {
+                queryComponents.Add(request.RawQuery);
+            }
+
+            var query = string.Join(" AND ", queryComponents.ToArray());
+
+            var filterComponents = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(request.Type))
+            {
+                filterComponents.Add($"type eq '{request.Type}'");
+            }
+
+            if (request.RequiredTags != null)
+            {
+                foreach (KeyValuePair<string, string> tag in request.RequiredTags)
+                {
+                    filterComponents.Add($"tags/any(tag: tag/key eq '{tag.Key}' and tag/value eq '{tag.Value}')");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.RawFilter))
+            {
+                filterComponents.Add(request.RawFilter);
+            }
+
+            var filter = string.Join(" and ", filterComponents.ToArray());
+            return await this.SearchLibraryHttpResponseAsync(libraryId, query, tenantId, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

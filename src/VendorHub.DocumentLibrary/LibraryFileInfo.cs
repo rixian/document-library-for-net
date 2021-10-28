@@ -4,7 +4,7 @@
 namespace VendorHub.DocumentLibrary
 {
     using System.Net.Mime;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Represents a library file item.
@@ -12,27 +12,35 @@ namespace VendorHub.DocumentLibrary
     public class LibraryFileInfo : LibraryItemInfo
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="LibraryFileInfo"/> class.
+        /// </summary>
+        public LibraryFileInfo()
+        {
+            this.Type = "file";
+        }
+
+        /// <summary>
         /// Gets or sets the length of the file in bytes.
         /// </summary>
-        [JsonProperty("length")]
+        [JsonPropertyName("length")]
         public long Length { get; set; }
 
         /// <summary>
         /// Gets or sets the file content type. Defaults to 'application/octet-stream'.
         /// </summary>
-        [JsonProperty("contentType")]
+        [JsonPropertyName("contentType")]
         public string ContentType { get; set; } = MediaTypeNames.Application.Octet;
 
         /// <summary>
         /// Gets or sets a value indicating whether this file is a shortcut or not.
         /// </summary>
-        [JsonProperty("isShortcut")]
+        [JsonPropertyName("isShortcut")]
         public bool IsShortcut { get; set; }
 
         /// <summary>
         /// Gets or sets the alternate ID of this file.
         /// </summary>
-        [JsonProperty("alternateId")]
+        [JsonPropertyName("alternateId")]
         public string? AlternateId { get; set; }
     }
 }

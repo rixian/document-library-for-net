@@ -41,6 +41,9 @@ Get-ChildItem "$PSScriptRoot\..\src\*.*proj" -Recurse |% {
     $targetFrameworks |? { $_ -match 'netcoreapp(\d+\.\d+)' } |% {
         $runtimeVersions += $Matches[1]
     }
+    $targetFrameworks |? { $_ -match 'net(\d+\.\d+)' } |% {
+        $runtimeVersions += $Matches[1]
+    }
 }
 
 Function Get-FileFromWeb([Uri]$Uri, $OutDir) {

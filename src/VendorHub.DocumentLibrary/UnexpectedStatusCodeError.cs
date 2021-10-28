@@ -12,7 +12,7 @@ namespace VendorHub.DocumentLibrary
     /// <summary>
     /// Standard error for unexpected status codes returned from an HTTP request.
     /// </summary>
-    public class UnexpectedStatusCodeError : Error
+    public record UnexpectedStatusCodeError : Error
     {
         private UnexpectedStatusCodeError()
         {

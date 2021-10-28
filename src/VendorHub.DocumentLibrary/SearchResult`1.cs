@@ -5,7 +5,7 @@ namespace VendorHub.DocumentLibrary
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Represents a search result.
@@ -17,13 +17,14 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the document found from the search.
         /// </summary>
-        [JsonProperty("document", Required = Required.Always)]
+        [JsonPropertyName("document")]
+        [Required]
         public T? Document { get; set; }
 
         /// <summary>
         /// Gets or sets the search score.
         /// </summary>
-        [JsonProperty("score", Required = Required.Always)]
+        [JsonPropertyName("score")]
         [Required(AllowEmptyStrings = true)]
         public double? SearchScore { get; set; }
 

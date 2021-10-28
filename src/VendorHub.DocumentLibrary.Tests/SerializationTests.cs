@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using NSubstitute;
 using RichardSzalay.MockHttp;
 using Rixian.Extensions.Tokens;
@@ -48,7 +48,8 @@ public class SerializationTests
             PartitionId = Guid.NewGuid(),
         };
 
-        LibraryItemInfo libItem = JsonConvert.DeserializeObject<LibraryItemInfo>(JsonConvert.SerializeObject(file));
+        var serialized = JsonSerializer.Serialize(file);
+        LibraryItemInfo? libItem = JsonSerializer.Deserialize<LibraryItemInfo>(serialized);
 
         libItem.Should().NotBeNull();
         libItem.Should().BeOfType<LibraryFileInfo>();

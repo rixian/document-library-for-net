@@ -5,7 +5,7 @@ namespace VendorHub.DocumentLibrary
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
     using Rixian.Drive.Common;
 
     /// <summary>
@@ -16,38 +16,40 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets the library ID.
         /// </summary>
-        [JsonProperty("libraryId", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("libraryId")]
         public Guid LibraryId { get; set; }
 
         /// <summary>
         /// Gets or sets the tenantID.
         /// </summary>
-        [JsonProperty("tenantId", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("tenantId")]
         public Guid TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the library name.
         /// </summary>
-        [JsonProperty("name", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("name")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the library storage location.
         /// </summary>
         [JsonConverter(typeof(CloudPathJsonConverter))]
-        [JsonProperty("location", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("location")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CloudPath? Location { get; set; }
 
         /// <summary>
         /// Gets or sets the library creation timestamp.
         /// </summary>
-        [JsonProperty("createdOn", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("createdOn")]
         public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether search is enabled for this library or not.
         /// </summary>
-        [JsonProperty("isSearchEnabled", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("isSearchEnabled")]
         public bool IsSearchEnabled { get; set; }
 
         /// <summary>

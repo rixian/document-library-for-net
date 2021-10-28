@@ -5,7 +5,7 @@ namespace VendorHub.DocumentLibrary
 {
     using System;
     using System.Runtime.Serialization;
-    using Newtonsoft.Json;
+    using System.Text.Json;
     using Rixian.Extensions.Errors;
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace VendorHub.DocumentLibrary
         /// <returns>The initialized ApiException.</returns>
         public static ApiException Create(Error error)
         {
-            var errorMessage = JsonConvert.SerializeObject(error, Formatting.Indented);
+            var errorMessage = JsonSerializer.Serialize(error);
             return new ApiException(errorMessage);
         }
     }

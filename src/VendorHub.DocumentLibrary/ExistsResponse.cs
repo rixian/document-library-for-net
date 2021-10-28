@@ -4,7 +4,8 @@
 namespace VendorHub.DocumentLibrary
 {
     using System.Collections.Generic;
-    using Newtonsoft.Json;
+    using System.ComponentModel.DataAnnotations;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Represents a response from the exists api endpoint.
@@ -14,7 +15,8 @@ namespace VendorHub.DocumentLibrary
         /// <summary>
         /// Gets or sets a value indicating whether the item exists or not.
         /// </summary>
-        [JsonProperty("exists", Required = Required.Always)]
+        [JsonPropertyName("exists")]
+        [Required]
         public bool Exists { get; set; }
 
         /// <summary>

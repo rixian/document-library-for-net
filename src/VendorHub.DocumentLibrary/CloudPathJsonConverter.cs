@@ -4,7 +4,8 @@
 namespace VendorHub.DocumentLibrary
 {
     using System;
-    using Newtonsoft.Json;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
     using Rixian.Drive.Common;
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes
@@ -14,26 +15,15 @@ namespace VendorHub.DocumentLibrary
     internal class CloudPathJsonConverter : JsonConverter<CloudPath>
     {
         /// <inheritdoc/>
-        public override CloudPath ReadJson(JsonReader reader, Type objectType, CloudPath existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override CloudPath? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader is null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            var s = reader.Value as string;
-            return s;
+            return reader.GetString();
         }
 
         /// <inheritdoc/>
-        public override void WriteJson(JsonWriter writer, CloudPath value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, CloudPath value, JsonSerializerOptions options)
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            writer.WriteValue(value?.ToString());
+            writer.WriteStringValue(value?.ToString());
         }
     }
 #pragma warning restore CA1812 // Avoid uninstantiated internal classes

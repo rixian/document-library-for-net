@@ -36,7 +36,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -60,7 +60,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -85,7 +85,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -112,7 +112,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -138,7 +138,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -164,7 +164,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -190,7 +190,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -216,7 +216,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -246,7 +246,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -374,7 +374,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -404,7 +404,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace VendorHub.DocumentLibrary
                 return;
             }
 
-            throw ApiException.Create(result.Error);
+            throw ApiException.Create(result.AsFail().Error);
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -483,7 +483,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -510,7 +510,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);
@@ -536,7 +536,7 @@ namespace VendorHub.DocumentLibrary
 
             if (result.IsSuccess)
             {
-                return result.Value;
+                return result.Value!;
             }
 
             throw ApiException.Create(result.Error);

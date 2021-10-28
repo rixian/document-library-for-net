@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rixian.Extensions.Tokens" Version="2.1.11" />
+    <PackageReference Include="Rixian.Extensions.Tokens" Version="2.1.12" />
   </ItemGroup>
 
   <ItemGroup>
